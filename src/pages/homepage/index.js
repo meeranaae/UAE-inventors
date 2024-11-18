@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 function HomePage() {
+  const partners = [
+    "/assets/images/partner1.png",
+    "/assets/images/partner2.png",
+    "/assets/images/partner3.png",
+    "/assets/images/partner4.png",
+    "/assets/images/partner5.png",
+    "/assets/images/partner6.png",
+  ];
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const partnersPerPage = 4;
+  const totalPages = Math.ceil(partners.length / partnersPerPage);
+  const currentPartners = partners.slice(
+    currentPage * partnersPerPage,
+    currentPage * partnersPerPage + partnersPerPage
+  );
+
+  // Intersection Observer hooks for animations
+  const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [servicesRef, servicesInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [partnersRef, partnersInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [testimonialRef, testimonialInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
   return (
     <div className="">
       {/* Hero Section */}
-      <section className="bg-gray-50 px-6 md:px-12 lg:px-24 py-12 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+      <section
+        ref={heroRef}
+        className={`bg-gray-50 px-6 md:px-12 lg:px-24 py-12 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 transition-transform duration-700 ${
+          heroInView ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+        }`}
+      >
         <div className="md:w-1/2 space-y-4">
           <h1 className="text-4xl font-bold text-red-600">
             The association premier higher inventor network
@@ -41,13 +70,16 @@ function HomePage() {
       </section>
 
       {/* Online Services Section */}
-      <section className="bg-gray-100 px-6 md:px-12 lg:px-24 py-12">
+      <section
+        ref={servicesRef}
+        className={`bg-gray-100 px-6 md:px-12 lg:px-24 py-12 transition-transform duration-700 ${
+          servicesInView ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+        }`}
+      >
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Online Services</h2>
         <div className="flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
-            {/* Service Card */}
-            {[
-              { title: 'Membership Request', icon: '/assets/icons/membership-request.png' },
+            {[{ title: 'Membership Request', icon: '/assets/icons/membership-request.png' },
               { title: 'Membership Renewal', icon: '/assets/icons/membership-renewal.png' },
               { title: 'Replacement Card', icon: '/assets/icons/replacement-card.png' },
               { title: 'Training Request', icon: '/assets/icons/training-request.png' },
@@ -71,20 +103,44 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section className="py-12 px-6 md:px-12 lg:px-24">
+      {/* Paginated Partners Section */}
+      <section
+        ref={partnersRef}
+        className={`py-12 px-6 md:px-12 lg:px-24 transition-transform duration-700 ${
+          partnersInView ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+        }`}
+      >
         <h2 className="text-3xl font-semibold text-center mb-8">Partners</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <img src="/assets/images/partner1.png" alt="Partner 1" className="h-12" />
-          <img src="/assets/images/partner2.png" alt="Partner 2" className="h-12" />
-          <img src="/assets/images/partner3.png" alt="Partner 3" className="h-12" />
-          <img src="/assets/images/partner4.png" alt="Partner 4" className="h-12" />
-          <img src="/assets/images/partner5.png" alt="Partner 5" className="h-12" />
+          {currentPartners.map((partner, index) => (
+            <img
+              key={index}
+              src={partner}
+              alt={`Partner ${index + 1}`}
+              className="h-12"
+            />
+          ))}
+        </div>
+        <div className="flex justify-center items-center mt-8 space-x-2">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(index)}
+              className={`w-4 h-1 rounded-full ${
+                currentPage === index ? 'bg-red-600' : 'bg-gray-400'
+              }`}
+            ></button>
+          ))}
         </div>
       </section>
 
-       {/* Video and Testimonial Section */}
-       <section className="bg-gray-100 py-12 px-6 md:px-12 lg:px-24 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8">
+      {/* Video and Testimonial Section */}
+      <section
+        ref={testimonialRef}
+        className={`bg-gray-100 py-12 px-6 md:px-12 lg:px-24 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8 transition-transform duration-700 ${
+          testimonialInView ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+        }`}
+      >
         <div className="lg:w-1/2 flex justify-center">
           <div className="relative w-full h-64 lg:h-96 bg-black">
             <iframe
