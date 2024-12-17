@@ -1,18 +1,32 @@
-import React from 'react'
-import Homepage from './pages/homepage'
-import Navbar from './components/navbar'
-import Footer  from './components/footer'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Homepage from "./pages/homepage";
+import MembershipRegistration from "./pages/membership-registration";
+import AboutAssociation from "./pages/about";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Homepage /> {/* Main content of the page */}
-      </main>
-      <Footer /> {/* Footer always at the bottom */}
-    </div>
-  )
-}
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar />
 
-export default App
+        {/* Main Content */}
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/membership-registration"element={<MembershipRegistration />} />
+            <Route path="/about"element={<AboutAssociation />} />
+          </Routes>
+        </main>
+
+        {/* Footer */}
+        <Footer />
+      </div>
+    </Router>
+  );
+};
+
+export default App;

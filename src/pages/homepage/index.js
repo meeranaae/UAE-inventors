@@ -206,7 +206,7 @@ function HomePage() {
         <div className="lg:w-1/2 flex justify-center">
           <div className="relative w-full h-64 lg:h-96 bg-black">
             <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/BgOR0IJyv8E?si=moLXjOLVoFkm2HDy"
               title="Video"
               className="w-full h-full"
               allowFullScreen
