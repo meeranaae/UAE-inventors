@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import FeedbackModal from "../../components/feedback-modal";
 import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const partners = [
@@ -28,6 +30,8 @@ function HomePage() {
     currentPage * partnersPerPage + partnersPerPage
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Intersection Observer hooks for animations
   const [heroRef, heroInView] = useInView({
     triggerOnce: true,
@@ -48,6 +52,10 @@ function HomePage() {
 
   return (
     <div className="">
+      <FeedbackModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -55,46 +63,62 @@ function HomePage() {
           heroInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
         }`}
       >
-        <div className="md:w-1/2 space-y-4">
-          <h1 className="text-3xl sm:text-4xl font-bold text-red-600">
+        {/* Content Section */}
+        <div className="md:w-1/2 space-y-4 text-center md:text-left">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">
             The association premier higher inventor network
           </h1>
-          <p className="text-gray-700 text-base sm:text-lg">
+          <p className="text-gray-700 text-sm sm:text-base md:text-lg">
             UAE Inventors Association is an innovative student-recruitment
             platform that helps students study abroad at leading universities,
             and provides universities with access to a global student market.
           </p>
-          <div className="flex space-x-4">
-            <button className="bg-red-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-md hover:bg-red-700">
-              READ MORE
+          <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+            <button
+              className="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700 w-full sm:w-auto"
+              onClick={() => setIsModalOpen(true)}
+            >
+              FEEDBACK
             </button>
-            <button className="bg-black text-white font-semibold py-2 px-4 sm:px-6 rounded-md hover:bg-gray-800">
+            <button className="bg-black text-white font-semibold py-2 px-6 rounded-md hover:bg-gray-800 w-full sm:w-auto">
               GET STARTED
             </button>
           </div>
         </div>
-        <div className="md:w-1/2 flex justify-center space-x-4">
-          {[
-            {
-              src: "/assets/images/hero-image1.jpg",
-              alt: "Innovation Image 1",
-            },
-            {
-              src: "/assets/images/hero-image2.png",
-              alt: "Innovation Image 2",
-            },
-            {
-              src: "/assets/images/hero-image3.jpg",
-              alt: "Innovation Image 3",
-            },
-          ].map((image, index) => (
-            <img
-              key={index}
-              src={image.src}
-              alt={image.alt}
-              className="h-48 sm:h-64 w-32 sm:w-48 rounded-lg object-cover shadow-lg"
-            />
-          ))}
+
+        {/* Image Section */}
+        <div className="md:w-1/2 flex justify-center md:justify-end">
+          {/* Mobile View: Single Image */}
+          <img
+            src="/assets/images/hero-image2.png" // Replace with your main hero image path
+            alt="Innovation"
+            className="rounded-lg shadow-lg object-cover w-4/5 sm:w-3/5 md:hidden"
+          />
+
+          {/* Desktop View: Three Images */}
+          <div className="hidden md:flex space-x-4">
+            {[
+              {
+                src: "/assets/images/hero-image1.jpg",
+                alt: "Innovation Image 1",
+              },
+              {
+                src: "/assets/images/hero-image2.png",
+                alt: "Innovation Image 2",
+              },
+              {
+                src: "/assets/images/hero-image3.jpg",
+                alt: "Innovation Image 3",
+              },
+            ].map((image, index) => (
+              <img
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                className="h-48 sm:h-64 w-32 sm:w-48 rounded-lg object-cover shadow-lg"
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -605,9 +629,11 @@ function HomePage() {
 
           {/* See All News Button */}
           <div className="text-center mt-8">
-            <button className="bg-black text-white font-semibold px-6 py-2 rounded-md hover:bg-gray-800">
-              SEE ALL NEWS
-            </button>
+            <Link to="/news">
+              <button className="bg-black text-white font-semibold px-6 py-2 rounded-md hover:bg-gray-800">
+                SEE ALL NEWS
+              </button>
+            </Link>
           </div>
         </div>
       </section>

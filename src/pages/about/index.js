@@ -21,7 +21,7 @@ const AboutAssociation = () => {
 
       {/* Capabilities */}
       <div className="bg-gray-50">
-        <div className="flex flex-col md:flex-row items-center mb-12 px-6">
+        <div className="flex flex-col md:flex-row items-center mb-12 py-12 px-6">
           <div className="w-full md:w-1/2 flex justify-center">
             <img
               src="/assets/images/capabilities.png"
@@ -44,7 +44,7 @@ const AboutAssociation = () => {
       </div>
 
       {/* Vision Section */}
-      <div className="flex flex-col md:flex-row items-center mb-12 md:pl-48">
+      <div className="flex flex-col md:flex-row items-center mb-12 py-12 md:pl-48">
         <div className="w-full md:w-1/2 px-4">
           <h3 className="text-2xl font-bold text-gray-800 mb-2">Our Vision</h3>
           <p className="text-gray-600 leading-relaxed">
@@ -64,7 +64,7 @@ const AboutAssociation = () => {
 
       {/* Mission Section */}
       <div className="bg-gray-50">
-        <div className="flex flex-col md:flex-row-reverse items-center mb-12 px-6">
+        <div className="flex flex-col md:flex-row-reverse items-center mb-12 py-12 px-6">
           <div className="w-full md:w-1/2 px-4">
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
               Our Mission
@@ -86,7 +86,7 @@ const AboutAssociation = () => {
       </div>
 
       {/* Values and Objectives */}
-      <div className="bg-gray-100 px-6 py-12 ">
+      <div className="bg-white px-6 py-12">
         <div className="flex flex-col md:flex-row items-center md:pl-48">
           <div className="md:w-2/3 mb-4 md:mb-0">
             <ul className="list-decimal list-inside text-gray-600 leading-relaxed">
